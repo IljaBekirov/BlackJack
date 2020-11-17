@@ -25,10 +25,17 @@ class Cards
     @all_cards = all_cards
   end
 
+  def take_card(player)
+    card = deck.sample
+    deck.delete(card)
+
+    player.cards << card
+  end
+
   private
 
   def all_cards
-    DECK.each { |card| @deck << TYPE.map { |t| card.first.to_s + t } }
-    @deck.flatten!.to_a.shuffle!
+    DECK.each { |card| deck << TYPE.map { |t| card.first.to_s + t } }
+    deck.flatten!.to_a.shuffle!
   end
 end

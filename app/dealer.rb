@@ -1,10 +1,7 @@
 # frozen_string_literal: true
 
-class Dealer
-  attr_reader :name
-
+class Dealer < Player
   def initialize
-    @name = 'Dealer'
-    @score = 100
+    super('Dealer')
   end
 end
