@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class Player
-  attr_reader :name, :bank, :cards, :score
+  attr_accessor :name, :bank, :cards, :score
 
   def initialize(name)
     @name = name
@@ -15,11 +15,18 @@ class Player
   end
 
   def count_score
-    if cards.include?('A')
-      puts 'Есть ТУЗ'
-    else
-      cards.map { |card| Cards::DECK.select { |k, v| @score += v[:value] if card.include?(k) } }
-      @score
+    score = 0
+    cards.map do |card|
+      Cards::DECK.select do |k, v|
+        next unless card.include?(k)
+
+        score = if score + v[:value].max > 21
+                  score + v[:value].min
+                else
+                  score + v[:value].max
+                end
+      end
     end
+    @score = score
   end
 end
